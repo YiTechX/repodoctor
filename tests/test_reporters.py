@@ -40,7 +40,7 @@ def test_all_formats_are_registered():
 
 def test_text_report_content():
     output = get_reporter("text")(make_report(), RenderOptions())
-    assert "RepoDoctor report for /tmp/demo" in output
+    assert f"RepoDoctor report for {Path('/tmp/demo')}" in output
     assert "DOCS" in output
     assert "Title readme" in output
     assert "Add one" in output
