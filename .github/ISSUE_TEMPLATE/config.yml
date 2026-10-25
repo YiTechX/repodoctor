@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/YiTechX/repodoctor/discussions
+    about: Questions and ideas are welcome in Discussions
