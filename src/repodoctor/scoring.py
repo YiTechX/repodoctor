@@ -34,6 +34,11 @@ def grade_of(score: int) -> str:
 class Report:
     root: Path
     results: tuple[CheckResult, ...]
+    source: str | None = None
+
+    @property
+    def label(self) -> str:
+        return self.source or str(self.root)
 
     @property
     def score(self) -> int:

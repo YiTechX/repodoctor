@@ -11,6 +11,7 @@ INDENT = 2
 def report_to_dict(report: Report) -> dict:
     return {
         "root": str(report.root),
+        "source": report.source,
         "score": report.score,
         "grade": report.grade,
         "summary": {

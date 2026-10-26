@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Remote scans: `repodoctor github:owner/repo`, `gitlab:`, `codeberg:` and `https://` git URLs are
+  shallow-cloned into a temporary directory, audited and removed. Also available through
+  `repodoctor.scan()`.
+- JSON reports include a `source` field naming the remote repository.
+- `make badge` regenerates the README health badge.
+
 ## [0.1.0] - 2026-10-25
 
 ### Added

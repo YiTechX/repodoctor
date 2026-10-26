@@ -2,6 +2,7 @@
 
 **One command. A health score, a grade and a prioritized to-do list for any code repository.**
 
+[![Repo health](docs/health.svg)](https://github.com/YiTechX/repodoctor)
 [![CI](https://github.com/YiTechX/repodoctor/actions/workflows/ci.yml/badge.svg)](https://github.com/YiTechX/repodoctor/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
@@ -12,6 +13,7 @@ RepoDoctor looks at a repository the way a new contributor, a security reviewer 
 maintainer would, and tells you exactly what to fix first. It has **zero dependencies**, runs
 anywhere Python runs, works on projects in any language and never executes the code it audits.
 
+- Scan **any public repository without cloning it yourself**: `repodoctor github:owner/repo`
 - 26 built-in checks across docs, community, automation, quality, security and packaging
 - Weighted score from 0 to 100 and a grade from A to F
 - Every failure comes with a hint that tells you how to fix it
@@ -31,6 +33,17 @@ Or without installing anything permanent:
 ```bash
 pipx run --spec git+https://github.com/YiTechX/repodoctor.git repodoctor .
 ```
+
+Curious how your favourite project scores? Point RepoDoctor at it:
+
+```bash
+repodoctor github:pallets/flask
+repodoctor gitlab:gitlab-org/gitlab-runner
+repodoctor https://codeberg.org/forgejo/forgejo.git
+```
+
+RepoDoctor makes a shallow clone into a temporary directory, audits it and deletes it again.
+Symlinks are checked out as plain files and nothing from the repository is ever executed.
 
 ## What it looks like
 
@@ -65,6 +78,29 @@ Score 41/100  Grade F  ████████████░░░░░░░
 ```
 
 RepoDoctor audits itself in CI and keeps a score of 95 or above.
+
+## How well-known projects score
+
+Even the most loved open source projects leave points on the table. A snapshot taken on
+2026-10-26:
+
+| Project | Score | Grade |
+| --- | ---: | :---: |
+| [astral-sh/uv](https://github.com/astral-sh/uv) | 95 | A |
+| [facebook/react](https://github.com/facebook/react) | 94 | A |
+| [junegunn/fzf](https://github.com/junegunn/fzf) | 88 | B |
+| [vuejs/core](https://github.com/vuejs/core) | 87 | B |
+| [django/django](https://github.com/django/django) | 87 | B |
+| [pallets/flask](https://github.com/pallets/flask) | 82 | B |
+| [fastapi/fastapi](https://github.com/fastapi/fastapi) | 81 | B |
+| [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep) | 80 | B |
+| [psf/requests](https://github.com/psf/requests) | 80 | B |
+| [expressjs/express](https://github.com/expressjs/express) | 79 | C |
+| **RepoDoctor itself** | **100** | **A** |
+
+Scores change as projects evolve, so run `repodoctor github:owner/repo` for the current numbers.
+The checks are heuristics: if one is wrong about a project, please
+[open an issue](https://github.com/YiTechX/repodoctor/issues/new/choose) so we can make it smarter.
 
 ## What it checks
 
@@ -106,6 +142,7 @@ Run `repodoctor explain <id>` to learn why a check exists. Checks that do not ap
 | --- | --- |
 | `repodoctor` | Audit the current directory |
 | `repodoctor path/to/repo` | Audit another directory |
+| `repodoctor github:owner/repo` | Audit a remote repository (also `gitlab:`, `codeberg:` and `https://` URLs) |
 | `repodoctor . --format markdown` | Choose `text`, `json`, `markdown` or `badge` |
 | `repodoctor . --format badge -o health.svg` | Write the report to a file |
 | `repodoctor . --fail-under 80` | Exit with status 1 below a score of 80 |
@@ -152,7 +189,20 @@ jobs:
 
 The report is added to the job summary of every run.
 
-Add the badge to your README by committing the output of `repodoctor . --format badge -o health.svg`.
+## Show your score
+
+Generate a badge and link it back here so visitors can check their own repositories too:
+
+```bash
+repodoctor . --format badge -o docs/health.svg
+```
+
+```markdown
+[![Repo health](docs/health.svg)](https://github.com/YiTechX/repodoctor)
+```
+
+Using RepoDoctor in your project? Add the badge, and tell us in a
+[discussion or issue](https://github.com/YiTechX/repodoctor/issues) so we can feature you.
 
 ## Python API
 
@@ -164,6 +214,8 @@ print(report.score, report.grade)
 
 for result in report.failures():
     print(result.check.id, result.outcome.hint)
+
+remote = repodoctor.scan("github:pallets/flask")
 ```
 
 ## Write your own check
@@ -201,6 +253,8 @@ features, each small enough for a first contribution.
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough. Please follow our
 [Code of Conduct](CODE_OF_CONDUCT.md). Found a vulnerability? See [SECURITY.md](SECURITY.md).
+
+If RepoDoctor helped you, a ⭐ on GitHub helps other people find it.
 
 ## License
 

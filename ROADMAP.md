@@ -52,6 +52,15 @@ Each one is a single function plus a few test rows. See [CONTRIBUTING.md](CONTRI
 - [ ] `python-dependency-pinning` (weight 2): applications pin dependencies in a lockfile or requirements file.
 - [ ] `semver-tags` (weight 2): git tags follow semantic versioning, read from `.git/packed-refs`.
 
+### Accuracy
+
+Found while scanning popular projects. Each one is a small, well-defined fix.
+
+- [ ] `readme-title`: accept READMEs that open with a centred HTML logo block before the heading.
+- [ ] `no-committed-secrets`: report private keys under test fixture directories such as
+  `tests/certs/` as a separate, lower-severity finding.
+- [ ] `ci-runs-tests`: recognise test commands hidden behind `make`, `tox`, `nox` or `just` targets.
+
 ## Help wanted: features
 
 - [ ] **`repodoctor fix`**: generate missing files (LICENSE, CODE_OF_CONDUCT, SECURITY, `.gitignore`,
@@ -61,7 +70,9 @@ Each one is a single function plus a few test rows. See [CONTRIBUTING.md](CONTRI
 - [ ] **`--format junit`**: show failed checks in any CI test report UI.
 - [ ] **`repodoctor diff`**: compare two JSON reports and show what improved or regressed.
 - [ ] **`repodoctor init`**: write a starter `.repodoctor.toml` based on what the repository contains.
-- [ ] **Remote scans**: `repodoctor scan github:owner/repo` using a shallow clone.
+- [x] **Remote scans**: `repodoctor scan github:owner/repo` using a shallow clone.
+- [ ] **`repodoctor compare`**: score several repositories side by side, for example
+  `repodoctor compare github:pallets/flask github:fastapi/fastapi`.
 - [ ] **Profiles**: presets such as `library`, `application` and `docs-site` that change weights.
 - [ ] **Parallel execution** for very large repositories.
 - [ ] **Translated hints**: a `--lang` option with community-maintained message catalogues.
