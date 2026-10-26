@@ -1,4 +1,4 @@
-.PHONY: dev test lint format audit check
+.PHONY: dev test lint format audit badge check
 
 dev:
 	python -m pip install -e ".[dev]"
@@ -17,5 +17,8 @@ format:
 
 audit:
 	python -m repodoctor . --fail-under 95
+
+badge:
+	python -m repodoctor . --format badge -o docs/health.svg
 
 check: lint test audit

@@ -58,7 +58,7 @@ def render_text(report: Report, options: RenderOptions) -> str:
     paint = _Painter(options.color)
     symbols = UNICODE_SYMBOLS if options.unicode else ASCII_SYMBOLS
     width = max((len(result.check.title) for result in report.results), default=0)
-    lines = [paint("bold", f"RepoDoctor report for {report.root}"), ""]
+    lines = [paint("bold", f"RepoDoctor report for {report.label}"), ""]
     for category, results in report.by_category():
         lines.append(paint("bold", category.upper()))
         for result in results:
